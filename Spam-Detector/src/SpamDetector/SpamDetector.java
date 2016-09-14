@@ -6,8 +6,12 @@
 package SpamDetector;
 import java.io.FileReader;
 import java.util.Arrays;
- 
 import com.opencsv.CSVReader;
+import java.util.List;
+import IndonesianNLP.IndonesianSentenceFormalization;
+import IndonesianNLP.IndonesianSentenceTokenizer;
+import IndonesianNLP.IndonesianStemmer;
+import java.util.ArrayList;
 
 /**
  *
@@ -19,23 +23,30 @@ public class SpamDetector {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
-
-
-      //Build reader instance
-      //Read data.csv
-      //Default seperator is comma
-      //Default quote character is double quote
-      //Start reading from line number 2 (line numbers start from zero)
-      CSVReader reader = new CSVReader(new FileReader("notspam.csv"), ',' , '"' , 3);
+      CSVReader reader = new CSVReader(new FileReader("notspam.csv"), ',' , '"' , 2);
        
+      //Read all rows at once
+      List<String[]> allRows = reader.readAll();
+      
+      IndonesianSentenceFormalization formalizer = new IndonesianSentenceFormalization();
+      IndonesianSentenceTokenizer tokenizer = new IndonesianSentenceTokenizer(); 
+      IndonesianStemmer stemmer = new IndonesianStemmer();
+      
+        ArrayList<ArrayList<String>> notSpam = new ArrayList<>();
+      
       //Read CSV line by line and use the string array as you want
-      String[] nextLine;
-      while ((nextLine = reader.readNext()) != null) {
-         if (nextLine != null) {
-            //Verifying the read data here
-            System.out.println(Arrays.toString(nextLine));
-         }
-       }
+     for(String[] row : allRows){
+        notSpam.add(tokenizer.tokenizeSentence(
+                stemmer.stemSentence(
+                    formalizer.normalizeSentence(Arrays.toString(row)))));
+        /*for (String word : notSpam.get(notSpam.size()-1)){
+            
+        }*/
+        
+        System.out.println(notSpam.get(notSpam.size()-1));
+     }
+     
+     
    }
     
 }
