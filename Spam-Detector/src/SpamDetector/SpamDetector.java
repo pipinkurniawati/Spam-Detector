@@ -8,9 +8,6 @@ import java.io.FileReader;
 import java.util.Arrays;
 import com.opencsv.CSVReader;
 import java.util.List;
-import IndonesianNLP.IndonesianSentenceFormalization;
-import IndonesianNLP.IndonesianSentenceTokenizer;
-import IndonesianNLP.IndonesianStemmer;
 import java.util.ArrayList;
 
 /**
@@ -28,24 +25,17 @@ public class SpamDetector {
       //Read all rows at once
       List<String[]> allRows = reader.readAll();
       
-      IndonesianSentenceFormalization formalizer = new IndonesianSentenceFormalization();
-      formalizer.initStopword();
-      IndonesianSentenceTokenizer tokenizer = new IndonesianSentenceTokenizer(); 
-      IndonesianStemmer stemmer = new IndonesianStemmer();
+      Preprocessor prepocessor = new Preprocessor();
       
       ArrayList<ArrayList<String>> notSpam = new ArrayList<>();
       
-      //Formalisasi
+
      for(String[] row : allRows){
+        //Add processed sentences
         notSpam.add(
-            tokenizer.tokenizeSentence(
-                stemmer.stemSentence(
-                    formalizer.deleteStopword(
-                        formalizer.normalizeSentence(Arrays.toString(row))));
-        /*for (String word : notSpam.get(notSpam.size()-1)){
-            
-        }*/
+            prepocessor.processSentence(Arrays.toString(row)));
         
+        //Print
         System.out.println(notSpam.get(notSpam.size()-1));
      }
      
