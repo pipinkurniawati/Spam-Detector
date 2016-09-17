@@ -7,6 +7,10 @@ package SpamDetector;
 import IndonesianNLP.IndonesianSentenceFormalization;
 import IndonesianNLP.IndonesianSentenceTokenizer;
 import IndonesianNLP.IndonesianStemmer;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 /**
  *
@@ -21,11 +25,31 @@ public class Preprocessor {
         formalizer.initStopword();
     }  
     
-    public ArrayList<String> processSentence(String sentence){
+    public ArrayList<String> processSentence(String message){
         return tokenizer.tokenizeSentence(
             formalizer.deleteStopword(
                 stemmer.stemSentence(
-                    formalizer.normalizeSentence(sentence))));
+                    formalizer.normalizeSentence(message))));
         
+    }
+    
+    public void writeToFile(ArrayList<String> data, String filepath) {
+        try {
+            File file = new File(filepath);
+            file.getParentFile().mkdirs();
+            System.out.println("Writing to " + file.getCanonicalPath());
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file.getAbsoluteFile());
+            BufferedWriter writer = new BufferedWriter(fw);
+            for(String d : data) { 
+                writer.write(d);
+                writer.write(" ");
+            }
+            writer.close();
+        } catch (IOException e) {
+                e.printStackTrace();
+        }
     }
 }
