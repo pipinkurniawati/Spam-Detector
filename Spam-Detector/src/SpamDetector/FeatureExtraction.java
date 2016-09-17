@@ -43,9 +43,9 @@ public class FeatureExtraction {
         
         Map<String, Double> sortedSpam = sortByValue(tfidfSpam);
         Map<String, Double> sortedNotSpam = sortByValue(tfidfNotSpam);
-        ArrayList<String> spamAttr = getNAttribute(sortedSpam, 250);
-        ArrayList<String> notSpamAttr = getNAttribute(sortedNotSpam, 250);
-        
+        ArrayList<String> spamAttr = getNAttribute(sortedSpam, 500);
+        ArrayList<String> notSpamAttr = getNAttribute(sortedNotSpam, 500);
+
         for (int i=0; i<spamAttr.size(); i++) {
             for (int j=0; j<notSpamAttr.size(); j++) {
                 if (spamAttr.get(i).equals(notSpamAttr.get(j))) {
@@ -55,10 +55,7 @@ public class FeatureExtraction {
             }
         }
         
-        Set<String> uniqueAttr = new HashSet<>(spamAttr);
-        ArrayList<String> attr = new ArrayList<>(uniqueAttr);
-        
-        return attr;
+        return spamAttr;
     }
     
     public ArrayList<ArrayList<Integer>> generateData(ArrayList<String> attributes, ArrayList<ArrayList<String>> messages, boolean spam) {
@@ -163,7 +160,7 @@ public class FeatureExtraction {
         Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
             public int compare(Map.Entry<String, Double> o1,
                                Map.Entry<String, Double> o2) {
-                return (o2.getValue()).compareTo(o1.getValue());
+                return (o1.getValue()).compareTo(o2.getValue());
             }
         });
 
@@ -185,5 +182,12 @@ public class FeatureExtraction {
             if (i > n) break;
         }
         return attr;
+    }
+    
+    public static <K, V> void printMap(Map<K, V> map) {
+        for (Map.Entry<K, V> entry : map.entrySet()) {
+            System.out.println("Key : " + entry.getKey()
+                    + " Value : " + entry.getValue());
+        }
     }
 }
