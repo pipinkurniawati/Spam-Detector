@@ -44,7 +44,7 @@ public class SpamDetector {
         
         // Cobain CART
         BufferedReader br = new BufferedReader(
-                         new FileReader("weather.numeric.arff"));
+                         new FileReader("data.arff"));
 
         ArffReader arff = new ArffReader(br);
         Instances data = arff.getData();
@@ -68,7 +68,7 @@ public class SpamDetector {
                 msg.add(
                 prepocessor.processSentence(Arrays.toString(row)));
                 //Print
-                System.out.println(msg.get(msg.size()-1));
+                //System.out.println(msg.get(msg.size()-1));
             }
         }
 

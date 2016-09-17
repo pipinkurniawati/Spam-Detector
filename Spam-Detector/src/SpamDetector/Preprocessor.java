@@ -39,9 +39,9 @@ public class Preprocessor {
             if (isPhoneNumber(result.get(i))) {
                 result.set(i, "_phone_");
             } else if (isJuta(result.get(i))) {
-                result.set(i, "1 juta");
+                result.set(i, "1juta");
             } else if (isRibu(result.get(i))) {
-                result.set(i, "1 ribu");
+                result.set(i, "1ribu");
             }
         }
         result.removeAll(Arrays.asList("", null, "-", ".", ":", ";", "+", "(", ")", "*", "!", "?", ",", "/", "\\", "[", "]", "<", ">", "=", "_", "\""));

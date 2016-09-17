@@ -62,13 +62,19 @@ public class FeatureExtraction {
         ArrayList<ArrayList<Integer>> dataList = new ArrayList<>();
         for (ArrayList<String> msg : messages ){
             ArrayList<Integer> data = new ArrayList<>();
-            for (String word : msg) {
-                for (String attr : attributes) {
-                    if (attr.equals(msg)) {
-                        data.add(1);
-                    } else {
-                        data.add(0);
+            for (String attr : attributes) {
+                boolean found = false;
+                for (String word : msg) {
+                    if (attr.equals(word)) {
+                        found = true;
+                        break;
                     }
+                }
+                if (found){
+                    data.add(1);
+                }
+                else {
+                    data.add(0);
                 }
             }
             if (spam) {
@@ -97,20 +103,27 @@ public class FeatureExtraction {
             bw.write("@relation spamfilter\n\n");
 
             for (int i=0; i<attr.size(); i++) {
-                bw.write("@attribute " + attr.get(i) + " {0,1}\n");
+                bw.write("@attribute " + attr.get(i) + " {no,yes}\n");
             }
             bw.write("@attribute spam {yes, no}");
 
             bw.write("\n\n@data\n");
             for (int i=0; i<data.size(); i++) {
                 for (int j=0; j<data.get(i).size()-1; j++) {
-                    bw.write(data.get(i).get(j) + ",");
+                    if (data.get(i).get(j)==1){
+                        bw.write("yes,");
+                    }
+                    else {
+                        bw.write("no,");
+                    }
                 }
-                if (data.get(i).get(data.get(i).size()-1) == 1) {
+                if (data.get(i).get(data.get(i).size()-1)==1) {
                     bw.write("yes\n");
-                } else {
+                }
+                else {
                     bw.write("no\n");
                 }
+                
             }
             bw.close();
         } catch (IOException e) {
