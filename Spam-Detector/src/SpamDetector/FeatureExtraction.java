@@ -31,8 +31,7 @@ public class FeatureExtraction {
     
     public ArrayList<ArrayList<Integer>> generateData(ArrayList<String> attributes, ArrayList<ArrayList<String>> messages, boolean spam) {
         ArrayList<ArrayList<Integer>> dataList = new ArrayList<>();
-        for (ArrayList<
-                String> msg : messages ){
+        for (ArrayList<String> msg : messages ){
             ArrayList<Integer> data = new ArrayList<>();
             for (String word : msg) {
                 for (String attr : attributes) {
@@ -52,4 +51,37 @@ public class FeatureExtraction {
         }
         return dataList;
     }
+    
+    public double occurenceCounter(ArrayList<String> msg, String term) {
+        double counter= 0;
+        for (String word : msg) {
+           if (term.equals(word)) {
+                  counter++;
+           }
+        }
+        return counter;
+    }
+    
+    public double termFrequency(ArrayList<String> msg, String term) {
+        return (double)occurenceCounter(msg, term)/msg.size();
+    }
+    
+    public double inverseDocumentFrequency(ArrayList<ArrayList<String>> messages, String term) {
+        double counter = 0;
+        for (ArrayList<String> msg : messages) {
+            for (String word : msg) {
+                if (term.equals(word)) {
+                    counter++;
+                    break;
+                }
+            }
+        }
+        return Math.log(messages.size()/counter);
+    }
+    
+    public double tfidf(ArrayList<ArrayList<String>> messages, ArrayList<String> msg, String term) {
+        return termFrequency(msg, term)*inverseDocumentFrequency(messages, term);
+    }
+    
+    
 }
