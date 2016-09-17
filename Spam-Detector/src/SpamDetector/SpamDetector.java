@@ -41,7 +41,7 @@ public class SpamDetector {
             tokenizer.tokenizeSentence(
                 stemmer.stemSentence(
                     formalizer.deleteStopword(
-                        formalizer.normalizeSentence2(Arrays.toString(row))))));
+                        formalizer.normalizeSentence(Arrays.toString(row))));
         /*for (String word : notSpam.get(notSpam.size()-1)){
             
         }*/

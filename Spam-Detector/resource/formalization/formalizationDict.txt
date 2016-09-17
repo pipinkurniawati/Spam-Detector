@@ -15,7 +15,7 @@ aj	saja
 aja	saja
 ajep-ajep	dunia gemerlap
 ajj	saja
-ak	saya
+ak	aku
 aka	dikenal juga sebagai
 akika	aku
 akko	aku
@@ -533,6 +533,7 @@ kluarga	keluarga
 klw	kalau
 klwrga	keluarga
 km	kamu
+kmu	kamu
 kmari	kemari
 kmps	kampus
 kmpus	kampus
