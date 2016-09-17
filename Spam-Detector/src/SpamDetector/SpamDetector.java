@@ -40,10 +40,7 @@ public class SpamDetector {
      
         // Cobain generate attribute & data
         FeatureExtraction fe = new FeatureExtraction();
-        ArrayList<String> attr = fe.generateAttribute(notSpam, spam);
-        ArrayList<ArrayList<Integer>> data1 = fe.generateData(attr, notSpam, false);
-        data1.addAll(fe.generateData(attr, spam, true));
-        System.out.println(attr.size());
+        fe.generateArff(spam, notSpam);
         
         // Cobain CART
         BufferedReader br = new BufferedReader(
@@ -71,7 +68,7 @@ public class SpamDetector {
                prepocessor.processSentence(Arrays.toString(row)));
 
            //Print
-           System.out.println(msg.get(msg.size()-1));
+           //System.out.println(msg.get(msg.size()-1));
         }
 
         return msg;
