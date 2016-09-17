@@ -29,16 +29,19 @@ public class SpamDetector {
       List<String[]> allRows = reader.readAll();
       
       IndonesianSentenceFormalization formalizer = new IndonesianSentenceFormalization();
+      formalizer.initStopword();
       IndonesianSentenceTokenizer tokenizer = new IndonesianSentenceTokenizer(); 
       IndonesianStemmer stemmer = new IndonesianStemmer();
       
-        ArrayList<ArrayList<String>> notSpam = new ArrayList<>();
+      ArrayList<ArrayList<String>> notSpam = new ArrayList<>();
       
-      //Read CSV line by line and use the string array as you want
+      //Formalisasi
      for(String[] row : allRows){
-        notSpam.add(tokenizer.tokenizeSentence(
+        notSpam.add(
+            tokenizer.tokenizeSentence(
                 stemmer.stemSentence(
-                    formalizer.normalizeSentence(Arrays.toString(row)))));
+                    formalizer.deleteStopword(
+                        formalizer.normalizeSentence2(Arrays.toString(row))))));
         /*for (String word : notSpam.get(notSpam.size()-1)){
             
         }*/
