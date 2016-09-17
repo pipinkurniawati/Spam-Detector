@@ -7,6 +7,8 @@ package SpamDetector;
 import java.io.FileReader;
 import java.util.Arrays;
 import com.opencsv.CSVReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -28,27 +30,36 @@ public class SpamDetector {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws Exception {
-      CSVReader reader = new CSVReader(new FileReader("notspam.csv"), ',' , '"' , 2);
-       
-      //Read all rows at once
-      List<String[]> allRows = reader.readAll();
-      
-      Preprocessor prepocessor = new Preprocessor();
-      
-      ArrayList<ArrayList<String>> notSpam = new ArrayList<>();
-      
+    public static void main(String[] args) throws IOException{
+        ArrayList<ArrayList<String>> notSpam = processCSV("notspam.csv");
+        ArrayList<ArrayList<String>> spam = processCSV("spam.csv");
+     
+        // Cobain doang
+        FeatureExtraction fe = new FeatureExtraction();
+        ArrayList<String> attr = fe.generateAttribute(notSpam, spam);
+        ArrayList<ArrayList<Integer>> data = fe.generateData(attr, notSpam, false);
+        data.addAll(fe.generateData(attr, spam, true));
+        System.out.println(attr.size());
+   }
+    
+   public static ArrayList<ArrayList<String>> processCSV(String path) throws FileNotFoundException, IOException {
+        CSVReader reader = new CSVReader(new FileReader(path), ',' , '"' , 2);
 
-     for(String[] row : allRows){
-        //Add processed sentences
-        notSpam.add(
-            prepocessor.processSentence(Arrays.toString(row)));
-        
-        //Print
-        System.out.println(notSpam.get(notSpam.size()-1));
-     }
-     
-     
+        //Read all rows at once
+        List<String[]> allRows = reader.readAll();
+        Preprocessor prepocessor = new Preprocessor();
+        ArrayList<ArrayList<String>> msg = new ArrayList<>();
+
+        for(String[] row : allRows){
+           //Add processed sentences
+           msg.add(
+               prepocessor.processSentence(Arrays.toString(row)));
+
+           //Print
+           System.out.println(msg.get(msg.size()-1));
+        }
+
+        return msg;
    }
     
 }
