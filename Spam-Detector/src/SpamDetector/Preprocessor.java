@@ -13,6 +13,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  *
  * @author jessica
@@ -33,8 +35,38 @@ public class Preprocessor {
             formalizer.deleteStopword(
                 stemmer.stemSentence(
                     formalizer.normalizeSentence(message))));
+        for (int i=0; i<result.size(); i++) {
+            if (isPhoneNumber(result.get(i))) {
+                result.set(i, "_phone_");
+            } else if (isJuta(result.get(i))) {
+                result.set(i, "1 juta");
+            } else if (isRibu(result.get(i))) {
+                result.set(i, "1 ribu");
+            }
+        }
         result.removeAll(Arrays.asList("", null, "-", ".", ":", ";", "+", "(", ")", "*", "!", "?", ",", "/", "\\", "[", "]", "<", ">", "=", "_", "\""));
         return result;
+    }
+    
+    private static boolean isPhoneNumber (String token) {
+        String regex = "([0-9]{8,20})";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(token);
+        return (m.matches());
+    }
+    
+    public boolean isJuta(String token) {
+        String regex = "([a-z0-9]+)(jt|jta)";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(token);
+        return (m.matches());
+    }
+    
+    public boolean isRibu(String token) {
+        String regex = "([a-z0-9]+)(rb|rbu)";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(token);
+        return (m.matches());
     }
     
     public void writeToFile(ArrayList<String> data, String filepath) {
