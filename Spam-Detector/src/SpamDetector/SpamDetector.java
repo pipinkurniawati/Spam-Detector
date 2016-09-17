@@ -15,6 +15,15 @@ import java.util.ArrayList;
  * @author jessica
  */
 public class SpamDetector {
+    private static String SPAM_PATH;
+    private static String NOT_SPAM_PATH;
+    private static String ARFF_PATH;
+    
+    public SpamDetector() {
+        SPAM_PATH = new String("spam.csv");
+        NOT_SPAM_PATH = new String("notspam.csv");
+        ARFF_PATH = new String("data.arff");
+    }
     
     /**
      * @param args the command line arguments
