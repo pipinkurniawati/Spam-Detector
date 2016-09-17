@@ -7,8 +7,12 @@ package SpamDetector;
 import java.io.FileReader;
 import java.util.Arrays;
 import com.opencsv.CSVReader;
+import java.io.BufferedReader;
 import java.util.List;
 import java.util.ArrayList;
+import weka.classifiers.trees.SimpleCart;
+import weka.core.Instances;
+import weka.core.converters.ArffLoader.ArffReader;
 
 /**
  *
@@ -36,8 +40,18 @@ public class SpamDetector {
             prepocessor.processSentence(Arrays.toString(row)));
         
         //Print
-        System.out.println(notSpam.get(notSpam.size()-1));
+        //System.out.println(notSpam.get(notSpam.size()-1));
      }
+     
+     BufferedReader br = new BufferedReader(
+                              new FileReader("weather.numeric.arff"));
+
+     ArffReader arff = new ArffReader(br);
+     Instances data = arff.getData();
+     data.setClassIndex(data.numAttributes() - 1);
+     
+     SimpleCart tree = new SimpleCart();
+     tree.buildClassifier(data);
      
      
    }
