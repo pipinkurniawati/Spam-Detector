@@ -9,8 +9,12 @@ import java.util.Arrays;
 import com.opencsv.CSVReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.BufferedReader;
 import java.util.List;
 import java.util.ArrayList;
+import weka.classifiers.trees.SimpleCart;
+import weka.core.Instances;
+import weka.core.converters.ArffLoader.ArffReader;
 
 /**
  *
@@ -30,16 +34,27 @@ public class SpamDetector {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException{
+    public static void main(String[] args) throws IOException, Exception{
         ArrayList<ArrayList<String>> notSpam = processCSV("notspam.csv");
         ArrayList<ArrayList<String>> spam = processCSV("spam.csv");
      
-        // Cobain doang
+        // Cobain generate attribute & data
         FeatureExtraction fe = new FeatureExtraction();
         ArrayList<String> attr = fe.generateAttribute(notSpam, spam);
-        ArrayList<ArrayList<Integer>> data = fe.generateData(attr, notSpam, false);
-        data.addAll(fe.generateData(attr, spam, true));
+        ArrayList<ArrayList<Integer>> data1 = fe.generateData(attr, notSpam, false);
+        data1.addAll(fe.generateData(attr, spam, true));
         System.out.println(attr.size());
+        
+        // Cobain CART
+        BufferedReader br = new BufferedReader(
+                         new FileReader("weather.numeric.arff"));
+
+        ArffReader arff = new ArffReader(br);
+        Instances data = arff.getData();
+        data.setClassIndex(data.numAttributes() - 1);
+
+        SimpleCart tree = new SimpleCart();
+        tree.buildClassifier(data);
    }
     
    public static ArrayList<ArrayList<String>> processCSV(String path) throws FileNotFoundException, IOException {
