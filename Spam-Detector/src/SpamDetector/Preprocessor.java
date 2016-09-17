@@ -42,6 +42,8 @@ public class Preprocessor {
                 result.set(i, "1 juta");
             } else if (isRibu(result.get(i))) {
                 result.set(i, "1 ribu");
+            } else if (isSingleLetter(result.get(i))) {
+                result.remove(i);
             }
         }
         result.removeAll(Arrays.asList("", null, "-", ".", ":", ";", "+", "(", ")", "*", "!", "?", ",", "/", "\\", "[", "]", "<", ">", "=", "_", "\""));
@@ -64,6 +66,13 @@ public class Preprocessor {
     
     public boolean isRibu(String token) {
         String regex = "([a-z0-9]+)(rb|rbu)";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(token);
+        return (m.matches());
+    }
+    
+    public boolean isSingleLetter(String token) {
+        String regex = "[a-z]|[0-9]";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(token);
         return (m.matches());
