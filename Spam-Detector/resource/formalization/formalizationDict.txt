@@ -147,6 +147,7 @@ bpk	bapak
 br	baru
 brb	segera kembali
 brg	bareng
+brharap	berharap
 brngkt	berangkat
 bro	saudara laki-laki
 brp	berapa
@@ -272,12 +273,14 @@ diuber	dikejar
 dket	dekat
 dkit	sedikit
 dkk	dan kawan-kawan
+dkt	dekat
 dl	dulu
 dll	dan lain-lain
 dlm	dalam
 dlu	dulu
 dmn	dimana
 dngn	dengan
+dng	dengan
 doang	saja
 dodol	bodoh
 doi	dia
@@ -493,6 +496,7 @@ kau	kamu
 kayanya	kayaknya
 kbar	kabar
 kbr	kabar
+kcau	kacau
 kcian	kasihan
 kdu	harus
 keburu	terlanjur
@@ -505,6 +509,7 @@ keknya	kayaknya
 kel	kelurahan
 keliatan	kelihatan
 kemaren	kemarin
+kemn	ke mana
 keneh	masih
 kepengen	mau
 kepikiran	terpikirkan
@@ -512,6 +517,7 @@ kepingin	mau
 kepo	mau tahu urusan orang
 kepsek	kepala sekolah
 kere	tidak punya uang
+kermh	ke rumah
 kesbang	kesatuan bangsa
 kesian	kasihan
 kesra	kesejahteraan rakyat
@@ -525,6 +531,7 @@ kibus	kaki busuk
 kimpoi	kawin
 kk	kakak
 kl	kalau
+klau	kalau
 klian	kalian
 klianz	kalian
 klo	kalau
@@ -561,6 +568,7 @@ krenz	keren
 krik	garing
 krm	kirim
 krn	karena
+krna	karena
 kt	kita
 ktauan	ketahuan
 ktmu	ketemu
@@ -612,6 +620,7 @@ loupz	cinta
 low	kalau
 lowh	kamu
 lp	lupa
+lsg	langsung
 lu	kamu
 luber	langsung, umum, bebas, dan rahasia
 luchu	lucu
@@ -666,7 +675,9 @@ milis	mailing list
 miras	minuman keras
 mksd	maksud
 mlah	malah
+mlai	mulai
 mls	malas
+mlysia malaysia
 mngkn	mungkin
 mnt	minta
 mo	mau
@@ -676,6 +687,7 @@ mokat	mati
 moso	masa
 mosok	masa
 mpe	sampai
+mrantau	merantau
 msh	masih
 msk	masuk
 mskpn	meskipun
@@ -898,6 +910,7 @@ reg	register
 rehab	rehabilitasi
 rejeki	rezeki
 rempong	sulit
+rencna	rencana
 renstra	rencana strategis
 repp	balas
 reskrim	reserse kriminal
@@ -933,6 +946,7 @@ sbh	sebuah
 sblm	sebelum
 sbnrny	sebenarnya
 scara	secara
+scepatnya	secepatnya
 scr	secara
 sdg	sedang
 sdgkn	sedangkan
@@ -967,6 +981,7 @@ skalian	sekalian
 skl	sekali
 sklh	sekolah
 skrg	sekarang
+skrng	sekarang
 skt	sakit
 skul	sekolah
 slesai	selesai
@@ -1011,6 +1026,8 @@ sumpek	sempit
 sy	saya
 syg	sayang
 syp	siapa
+syrt	syarat
+syrat	syarat
 t4	tempat
 tabanas	tabungan pembangunan nasional
 tajir	kaya
@@ -1062,6 +1079,7 @@ tmpah	tumpah
 tmph	tumpah
 tmpt	tempat
 tnda	tanda
+tngga	tangga
 tngu	tunggu
 tnh	tanah
 tnyta	ternyata
