@@ -52,6 +52,7 @@ public class SpamDetector {
 
         SimpleCart tree = new SimpleCart();
         tree.buildClassifier(data);
+        System.out.println(tree.toString());
    }
     
    public static ArrayList<ArrayList<String>> processCSV(String path) throws FileNotFoundException, IOException {

@@ -43,8 +43,8 @@ public class FeatureExtraction {
         
         Map<String, Double> sortedSpam = sortByValue(tfidfSpam);
         Map<String, Double> sortedNotSpam = sortByValue(tfidfNotSpam);
-        ArrayList<String> spamAttr = getNAttribute(sortedSpam, 500);
-        ArrayList<String> notSpamAttr = getNAttribute(sortedNotSpam, 500);
+        ArrayList<String> spamAttr = getNAttribute(sortedSpam, 1000);
+        ArrayList<String> notSpamAttr = getNAttribute(sortedNotSpam, 1000);
 
         for (int i=0; i<spamAttr.size(); i++) {
             for (int j=0; j<notSpamAttr.size(); j++) {
