@@ -1,5 +1,0 @@
-@relation 'C__Users_Acer_Documents_GitHub_Spam-Detector_tes-weka.filters.unsupervised.attribute.StringToWordVector-R1-W1000-prune-rate-1.0-I-N0-stemmerweka.core.stemmers.NullStemmer-M1-O-tokenizerweka.core.tokenizers.WordTokenizer -delimiters \" \\r\\n\\t.,;:\\\'\\\"()?!\"'
-
-@attribute @@class@@ {}
-
-@data

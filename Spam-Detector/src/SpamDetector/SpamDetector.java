@@ -64,11 +64,12 @@ public class SpamDetector {
 
         for(String[] row : allRows){
            //Add processed sentences
-           msg.add(
-               prepocessor.processSentence(Arrays.toString(row)));
-
-           //Print
-           //System.out.println(msg.get(msg.size()-1));
+           if (row[0].length() > 0) {
+                msg.add(
+                prepocessor.processSentence(Arrays.toString(row)));
+                //Print
+                System.out.println(msg.get(msg.size()-1));
+            }
         }
 
         return msg;

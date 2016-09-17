@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 /**
  *
  * @author jessica
@@ -26,11 +27,14 @@ public class Preprocessor {
     }  
     
     public ArrayList<String> processSentence(String message){
-        return tokenizer.tokenizeSentence(
+        message = message.toLowerCase();
+        ArrayList<String> result = new ArrayList<String>();
+        result = tokenizer.tokenizeSentence(
             formalizer.deleteStopword(
                 stemmer.stemSentence(
                     formalizer.normalizeSentence(message))));
-        
+        result.removeAll(Arrays.asList("", null, "-", ".", ":", ";", "+", "(", ")", "*", "!", "?", ",", "/", "\\", "[", "]", "<", ">", "=", "_", "\""));
+        return result;
     }
     
     public void writeToFile(ArrayList<String> data, String filepath) {

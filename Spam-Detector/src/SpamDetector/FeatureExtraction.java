@@ -10,7 +10,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -20,17 +27,37 @@ import java.util.Set;
 public class FeatureExtraction {
     private final static String ARFF_PATH = "data.arff";
     
-    public ArrayList<String> generateAttribute (ArrayList<ArrayList<String>> spam, ArrayList<ArrayList<String>> notSpam) {
-        ArrayList<String> merged = new ArrayList<>();
-        for (ArrayList<String> s : spam) {
-            merged.addAll(s);
+    public ArrayList<String> generateAttribute (ArrayList<ArrayList<String>> spam, ArrayList<ArrayList<String>> notSpam) {        
+        HashMap<String, Double> tfidfSpam = new HashMap<>(); 
+        for (ArrayList<String> msg : spam) {
+            for (String term: msg) {
+                tfidfSpam.put(term, tfidf(spam, msg, term));
+            }
         }
-        for (ArrayList<String> s : notSpam) {
-            merged.addAll(s);
+        HashMap<String, Double> tfidfNotSpam = new HashMap<>(); 
+        for (ArrayList<String> msg : notSpam) {
+            for (String term: msg) {
+                tfidfNotSpam.put(term, tfidf(notSpam, msg, term));
+            }
         }
         
-        Set<String> uniqueAttr = new HashSet<>(merged);
+        Map<String, Double> sortedSpam = sortByValue(tfidfSpam);
+        Map<String, Double> sortedNotSpam = sortByValue(tfidfNotSpam);
+        ArrayList<String> spamAttr = getNAttribute(sortedSpam, 250);
+        ArrayList<String> notSpamAttr = getNAttribute(sortedNotSpam, 250);
+        
+        for (int i=0; i<spamAttr.size(); i++) {
+            for (int j=0; j<notSpamAttr.size(); j++) {
+                if (spamAttr.get(i).equals(notSpamAttr.get(j))) {
+                    spamAttr.remove(i);
+                    break;
+                }
+            }
+        }
+        
+        Set<String> uniqueAttr = new HashSet<>(spamAttr);
         ArrayList<String> attr = new ArrayList<>(uniqueAttr);
+        
         return attr;
     }
     
@@ -123,5 +150,40 @@ public class FeatureExtraction {
     
     public double tfidf(ArrayList<ArrayList<String>> messages, ArrayList<String> msg, String term) {
         return termFrequency(msg, term)*inverseDocumentFrequency(messages, term);
+    }
+    
+    private static Map<String, Double> sortByValue(Map<String, Double> unsortMap) {
+
+        // 1. Convert Map to List of Map
+        List<Map.Entry<String, Double>> list =
+                new LinkedList<Map.Entry<String, Double>>(unsortMap.entrySet());
+
+        // 2. Sort list with Collections.sort(), provide a custom Comparator
+        //    Try switch the o1 o2 position for a different order
+        Collections.sort(list, new Comparator<Map.Entry<String, Double>>() {
+            public int compare(Map.Entry<String, Double> o1,
+                               Map.Entry<String, Double> o2) {
+                return (o2.getValue()).compareTo(o1.getValue());
+            }
+        });
+
+        // 3. Loop the sorted list and put it into a new insertion order Map LinkedHashMap
+        Map<String, Double> sortedMap = new LinkedHashMap<String, Double>();
+        for (Map.Entry<String, Double> entry : list) {
+            sortedMap.put(entry.getKey(), entry.getValue());
+        }
+
+        return sortedMap;
+    }
+    
+    public ArrayList<String> getNAttribute(Map<String, Double> map, int n) {
+        ArrayList<String> attr = new ArrayList<>();
+        int i = 0;
+        for (Map.Entry<String, Double> entry : map.entrySet()) {
+            attr.add(entry.getKey());
+            i++;
+            if (i > n) break;
+        }
+        return attr;
     }
 }
