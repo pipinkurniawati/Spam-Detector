@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Random;
 import weka.classifiers.Evaluation;
 import weka.classifiers.trees.SimpleCart;
 import weka.core.Instances;
@@ -58,7 +59,10 @@ public class SpamDetector {
         Evaluation eval = new Evaluation(data);
         eval.evaluateModel(tree, data);
         System.out.println(eval.toSummaryString("\n\n\n\nResults\n======\n", false));
-   }
+        eval.crossValidateModel(tree, data, 10, new Random());
+        System.out.println(eval.toSummaryString("\n\n\n\n10-Fold\n======\n", false));
+        
+    }
     
    public static ArrayList<ArrayList<String>> processCSV(String path) throws FileNotFoundException, IOException {
         CSVReader reader = new CSVReader(new FileReader(path), ',' , '"' , 2);
