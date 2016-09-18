@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.util.List;
 import java.util.ArrayList;
+import weka.classifiers.Evaluation;
 import weka.classifiers.trees.SimpleCart;
 import weka.core.Instances;
 import weka.core.converters.ArffLoader.ArffReader;
@@ -44,7 +45,7 @@ public class SpamDetector {
         
         // Cobain CART
         BufferedReader br = new BufferedReader(
-                         new FileReader("weather.numeric.arff"));
+                         new FileReader("data.arff"));
 
         ArffReader arff = new ArffReader(br);
         Instances data = arff.getData();
@@ -52,6 +53,11 @@ public class SpamDetector {
 
         SimpleCart tree = new SimpleCart();
         tree.buildClassifier(data);
+        System.out.println(tree.toString());
+        
+        Evaluation eval = new Evaluation(data);
+        eval.evaluateModel(tree, data);
+        System.out.println(eval.toSummaryString("\n\n\n\nResults\n======\n", false));
    }
     
    public static ArrayList<ArrayList<String>> processCSV(String path) throws FileNotFoundException, IOException {
@@ -68,7 +74,7 @@ public class SpamDetector {
                 msg.add(
                 prepocessor.processSentence(Arrays.toString(row)));
                 //Print
-                System.out.println(msg.get(msg.size()-1));
+                //System.out.println(msg.get(msg.size()-1));
             }
         }
 
