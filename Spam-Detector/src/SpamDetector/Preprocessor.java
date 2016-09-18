@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package SpamDetector;
+import IndonesianNLP.IndonesianSentenceDetector;
 import IndonesianNLP.IndonesianSentenceFormalization;
 import IndonesianNLP.IndonesianSentenceTokenizer;
 import IndonesianNLP.IndonesianStemmer;
@@ -21,6 +22,7 @@ import java.util.regex.Pattern;
  */
 public class Preprocessor {
     private final IndonesianSentenceFormalization formalizer = new IndonesianSentenceFormalization();
+    private final IndonesianSentenceDetector detector = new IndonesianSentenceDetector();
     private final IndonesianSentenceTokenizer tokenizer = new IndonesianSentenceTokenizer(); 
     private final IndonesianStemmer stemmer = new IndonesianStemmer();
     
@@ -31,10 +33,14 @@ public class Preprocessor {
     public ArrayList<String> processSentence(String message){
         message = message.toLowerCase();
         ArrayList<String> result = new ArrayList<String>();
-        result = tokenizer.tokenizeSentence(
+        ArrayList<String> sentences = new ArrayList<String>();
+        sentences = detector.splitSentence(
             formalizer.deleteStopword(
                 stemmer.stemSentence(
                     formalizer.normalizeSentence(message))));
+        for (String str : sentences) {
+            result.addAll(tokenizer.tokenizeSentence(str));
+        }
         for (int i=0; i<result.size(); i++) {
             if (isPhoneNumber(result.get(i))) {
                 result.set(i, "_phone_");
