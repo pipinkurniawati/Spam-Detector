@@ -155,7 +155,7 @@ public class FeatureExtraction {
                 }
             }
         }
-        return Math.log(messages.size()/counter);
+        return Math.log(messages.size()/1+counter);
     }
     
     public double tfidf(ArrayList<ArrayList<String>> messages, ArrayList<String> msg, String term) {

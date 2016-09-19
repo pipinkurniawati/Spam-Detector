@@ -48,7 +48,7 @@ public class Preprocessor {
                 result.set(i, "1juta");
             } else if (isRibu(result.get(i))) {
                 result.set(i, "1ribu");
-            } else if (isSingleLetter(result.get(i))) {
+            } else if (isUnusedTerm(result.get(i)) || result.get(i).equals("am")) {
                 result.remove(i);
             }
         }
@@ -77,7 +77,7 @@ public class Preprocessor {
         return (m.matches());
     }
     
-    public boolean isSingleLetter(String token) {
+    public boolean isUnusedTerm(String token) {
         String regex = "[a-z]|[0-9]";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(token);
